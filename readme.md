@@ -14,6 +14,9 @@ After cloning this repository, you can install the required libraries including 
 pip install -r requirements.txt
 ```
 
+You can use sample data (.csv) files by uncompressing `data.tar.gz`. 
+
+
 Note that the result of out tools can be varied depending of the version of MAGIC you have installed. 
 
 [^2]: David van Dijk, Roshan Sharma, Juozas Nainys, Guy Wolf, Smita Krishnaswamy, Dana Pe’er.  "Recovering Gene Interactions from Single-Cell Data Using Data Diffusion", Cell, Vol. 174, Issue 3, 716-729.E27, 2018. DOI: [https://doi.org/10.1016/j.cell.2018.05.061](https://doi.org/10.1016/j.cell.2018.05.061)
@@ -37,14 +40,14 @@ The following is an example of a part of a gene exprresion matrix
 To generate a gene correlation matrix from the input, `compute_gcm.py` is used. 
 By default, MAGIC is applied to the generation. 
 
-The following an example of the usage of `compute_gcm.py`, assuming that the input file is `data/SilicaCCR2KO1_Day21.csv`.
+The following an example of the usage of `compute_gcm.py`, assuming that the input file is `data/day21.csv`.
 
 
 ```
-python compute_gcm.py data/SilicaCCR2KO1_Day21.csv -g 1050
+python compute_gcm.py data/day21.csv -g 1050
 ```
 
-This outputs `data/corr_SilicaCCR2KO1_Day21.csv`. 
+This outputs `data/corr_day21.csv`. 
 The option and parameter `-g 1050` means that genes appeared on less than 1050 cells are ignored. 
 For the details of parameters and options, use `-h` option. 
 
@@ -62,10 +65,10 @@ The input is a .csv file that is an output of the previous section (it represent
 Here, `construct_gcn.py` is used. 
 
 
-The following is an example of the usage of `construct_gcn.py`, assuming that the input file is `data/corr_SilicaCCR2KO1_Day21.csv`. 
+The following is an example of the usage of `construct_gcn.py`, assuming that the input file is `data/corr_day21.csv`. 
 
 ```
-python construct_gcn.py data/corr_SilicaCCR2KO1_Day21.csv dict_final.csv 0.8 1.1
+python construct_gcn.py data/corr_day21.csv dict_final.csv 0.8 1.1
 ```
 
 Note that `dict_final.csv` is a file containing a dictionary whose key is the name of each gene and value is the chromosome and 
@@ -73,7 +76,7 @@ Note that `dict_final.csv` is a file containing a dictionary whose key is the na
 The first parameter `0.8` means that every pair of genes whose correlation coefficient is at most -0.8 has an edge in the output network. 
 The second parameter `1.1` means that every pair of genes with a positive correlation coefficient has not an edge in the output network (`1.1` can be any value larger than 1.0). 
 
-The command above outputs `data/corr_SilicaCCR2KO1_Day21.net`. 
+The command above outputs `data/corr_day21.net`. 
 For the details of parameters and options, use `-h` option. 
 
 
@@ -83,13 +86,13 @@ For the details of parameters and options, use `-h` option.
 
 A gene correlation correlation network can be plotted using `plot_gcn.py`. 
 
-The following is an example for plotting `data/corr_SilicaCCR2KO1_Day21.net` that represents the gene correlation network obtained above. 
+The following is an example for plotting `data/corr_day21.net` that represents the gene correlation network obtained above. 
 
 ```
-python plot_gcn.py data/corr_SilicaCCR2KO1_Day21.net 
+python plot_gcn.py data/corr_day21.net 
 ```
 
-The result of plotting this network is stored as `data/corr_SilicaCCR2KO1_Day21.png`. 
+The result of plotting this network is stored as `data/corr_day21.png`. 
 For the details of parameters and options, use `-h` option. 
 For example, you can output an .eps file instead of a .png file.
 
@@ -102,13 +105,13 @@ PageRank is a method for ranking web pages on a web graph.
 This algorithm can be applied to several kinds of networks.
 Especially, ranking of vertices on a gene correlation network would reveal important genes. 
 
-The following is an example for computing a ranking of genes in the gene correlation network represented by the file `data/corr_SilicaCCR2KO1_Day21.net`. 
+The following is an example for computing a ranking of genes in the gene correlation network represented by the file `data/corr_day21.net`. 
 
 ```
-python rank_genes.py data/corr_SilicaCCR2KO1_Day21.net
+python rank_genes.py data/corr_day21.net
 ```
 
-This outputs `data/corr_SilicaCCR2KO1_Day21_rank.csv`. 
+This outputs `data/corr_day21_rank.csv`. 
 The first column of the result .csv file contains the names of genes. 
 The second column shows the degree of the vertex corresponding to each gene. 
 The third column shows the value of PageRank of each gene. 
@@ -123,16 +126,15 @@ For the details of parameters and options, use `-h` option.
 
 While various clustering methods are known, the Louvain method is specialized for network structure. It is a method that leverages the structure of a given network to discover communities (subgraphs with dense edges) similar to clusters.
 
-The following is an example for finding gene clusters on the gene correlation network represented by the file `data/corr_SilicaCCR2KO1_Day21.net`. 
+The following is an example for finding gene clusters on the gene correlation network represented by the file `data/corr_day21.net`. 
 
 ```
-python louvain_clustering.py data/corr_SilicaCCR2KO1_Day21.net
+python louvain_clustering.py data/corr_day21.net
 ```
 
-This outputs several .net files, including `data/louvain_corr_SilicaCCR2KO1_Day21_1.net` and `data/louvain_corr_SilicaCCR2KO1_Day21_2.net`. 
+This outputs several .net files, including `data/louvain_corr_day21_1.net` and `data/louvain_corr_day21_2.net`. 
 The last `_1` and `_2` denote the indices of clusters. 
 
 For the details of parameters and options, use `-h` option. 
 For example, you can generate .png files that plot the network structure of each obtained cluster. Note that every cluster is a subgraph of the input gene correlation network. 
-
 
