@@ -49,12 +49,12 @@ def ranking(g, filename, gene=''):
   ----------
   g: the graph.
   filename: csv file for storing the result
-  gene: for personalized PageRank
+  gene: for personalized PageRank (work in progress)
   """
   degs = [g.degree(i) for i in g.nodes ]
   pr_noweight = nx.pagerank(g, weight=None)
   pr_weight = negative_pagerank(g)
-  if gene != '': 
+  if gene != 'None' and gene != '': 
     ppr_weight = nx.pagerank(g, weight='weight', personalization={gene:1})
   df = pd.DataFrame([], columns=['Gene', 'Degree', 'PageRank w/o weight', 'PageRank w/ weight'])
   df['Gene'] = g.nodes
