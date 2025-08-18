@@ -158,11 +158,3 @@ def my_read_pajek(path, encoding="UTF-8"):
 
 
 
-if __name__ == '__main__':
-  #G = my_read_pajek("D:/dropbox/2013_lecture_1st/japangraph_pajek_xy2_eng.net")
-  #G = my_read_pajek("pajektest.net")
-  G = my_read_pajek("../../Shimano/red08/corr_betacell_6w.net")
-  print(G.nodes(data=True))
-  #xs = nx.get_node_attributes(G, 'y')
-  nx.write_pajek(G, "../../Shimano/test_write.net")
-  #print(xs)

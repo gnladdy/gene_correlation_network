@@ -41,7 +41,7 @@ schema = Schema({
   '-m': bool,
   Optional('-o'): Use(str),
   '<from>': Or(None, And(Use(int), lambda n: 0 <= n), error="<from> should be a positive integer"),
-  '<to>': Or(None, And(Use(int), lambda n: 0 <= n), error="<from> should be a positive integer"),
+  '<to>': Or(None, And(Use(int), lambda n: 0 <= n), error="<to> should be a positive integer"),
 })
 
 # constants for default coordinates

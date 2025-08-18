@@ -7,13 +7,14 @@ __doc__ = (
   (if size is 0, the gene is removed)
   
 usage:
-{f} <data_file> [-s <setting_file>] [-e] [-o <output_file>]
+{f} <data_file> [-s <setting_file>] [-e|-pdf] [-o <output_file>]
 {f} -h | --help
 
 options:
   -h, --help               show this help message and exit.
   <data_file>              specify the graph file (.net).
   -e                       output eps file.
+  -pdf                     output pdf file.
   -s <setting_file>        use a setting CSV file.
   -o <output_file>         specify the output file.
 """).format(f=__file__)
@@ -34,6 +35,7 @@ schema = Schema({
   '--help': bool,
   '<data_file>': Use(str),
   '-e': bool,
+  '-pdf': bool,
   Optional('-s'): Use(str),
   Optional('-o'): Use(str),
 })
@@ -132,6 +134,8 @@ if __name__ == '__main__':
     ext = '.png'
     if args['-e']:
       ext = '.eps'
+    elif args['-pdf']:
+      ext = '.pdf'
     result_file = data_dir + '/' + data_file_without_ext + ext 
   
   
